@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
+// let child trigger parent method
 export default class Parent extends LightningElement {
     name = 'Shihab';
 
