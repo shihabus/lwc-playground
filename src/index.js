@@ -1,8 +1,7 @@
 import { createElement } from 'lwc';
-import MyApp from 'my/app';
-import Composition from 'composition/sendChildParentEvent';
+// import Composition from 'my/app';
+import App2 from 'custom/app';
 
-// const app = createElement('my-app', { is: MyApp });
-const app = createElement('composition-site', { is: Composition });
+const app = createElement('custom-app', { is: App2 });
 // eslint-disable-next-line @lwc/lwc/no-document-query
 document.querySelector('#main').appendChild(app);
