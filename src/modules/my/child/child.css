@@ -1,0 +1,23 @@
+p {
+    font-size: x-large;
+}
+
+:host {
+    display: block;
+    background-color: whitesmoke;
+    /* --important-color: blue;
+    --not-important-color: gray; */
+}
+
+:host(.active) {
+    display: block;
+    background-color: thistle;
+}
+
+.important {
+    color: var(--important-color);
+}
+
+.not-important {
+    color: var(--not-important-color);
+}

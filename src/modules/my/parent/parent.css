@@ -1,0 +1,13 @@
+@import 'my/cssLibrary';
+
+p {
+    color: red;
+    font-size: xx-large;
+}
+
+:host {
+    --important-color: blue;
+    --not-important-color: violet;
+}
+
+

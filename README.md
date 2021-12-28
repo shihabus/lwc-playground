@@ -1,11 +1,14 @@
-# lwc-app
+## Notes
 
-Here will be some information about the app.
+### CSS 
+- CSS variables are inherited
+- CSS styles are scoped to the element. This is because of shadow boundaries. DOM queries and CSS selectors can't cross shadow boundaries. Thus parent styles can't leak into child.
+- CSS files should have the same name as the element
 
-## How to start?
+### Composition
+- 
 
-Start simple by running `yarn watch` (or `npm run watch`, if you set up the project with `npm`). This will start the project with a local development server.
 
-The source files are located in the [`src`](./src) folder. All web components are within the [`src/modules`](./src/modules) folder. The folder hierarchy also represents the naming structure of the web components.
-
-Find more information on the main repo on [GitHub](https://github.com/muenzpraeger/create-lwc-app).
+## Glossary
+- Shadow Tree
+- Shadow DOM
