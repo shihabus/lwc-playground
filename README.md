@@ -47,7 +47,7 @@ static get observedAttributes() {
 ## [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom?hl=en#intro)
 
 -   **Events** in Shadow DOM are _re-targeted_, that means, suppose you click a button inside a shadow DOM, the outer world can listen to the event but the `event.target` would appear as it as fired from the shadow root and not the child within it. This helps to keep the internal implementation private (encapsulation).
--   even though outside world can't reach the shadow subtree, still they are able to __style__ things inside. For this, the author can leave knobs(pseudo selectors), that the consumer can access. But this doesn't mean, external styles will _leak in or out_ of the shadow boundary.
+-   even though outside world can't reach the shadow subtree, still they are able to **style** things inside. For this, the author can leave knobs(pseudo selectors), that the consumer can access. But this doesn't mean, external styles will _leak in or out_ of the shadow boundary.
 
 ## [Lightning Web Components](https://lwc.dev/)
 
@@ -79,6 +79,7 @@ static get observedAttributes() {
 
 -   slots let you pass markup to the child
 -   even though slots seem to appear on child, they are actually part of the parent component
+-   when we use slots, although the content appears to be rendered inside the slot element, a “pointer” to the original content gets inserted into the slot.
 
 ```
 // named
@@ -97,6 +98,13 @@ static get observedAttributes() {
     <slot name="secondName">Default Second Name</slot>
 </template>
 ```
+
+#### Events
+
+-   To communicate up the component hierarchy, use events. To communicate down the component hierarchy, pass properties to a child via HTML attributes, or call its public methods.
+-   use `this.template.addEventListener` to register events for child that are inside the shadow tree. For example direct children inside `<template>`
+-   to listen to event from slots we should use `this.addEventListener` as they are not part of the shadow DOM. The listener is registered on the host.
+-   listeners that are set expect on `window` are automatically removed by the framework
 
 #### Light DOM
 
