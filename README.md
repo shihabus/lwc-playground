@@ -46,6 +46,9 @@ static get observedAttributes() {
 
 ## [Shadow DOM](https://developers.google.com/web/fundamentals/web-components/shadowdom?hl=en#intro)
 
+-   **Events** in Shadow DOM are _re-targeted_, that means, suppose you click a button inside a shadow DOM, the outer world can listen to the event but the `event.target` would appear as it as fired from the shadow root and not the child within it. This helps to keep the internal implementation private (encapsulation).
+-   even though outside world can't reach the shadow subtree, still they are able to __style__ things inside. For this, the author can leave knobs(pseudo selectors), that the consumer can access. But this doesn't mean, external styles will _leak in or out_ of the shadow boundary.
+
 ## [Lightning Web Components](https://lwc.dev/)
 
 ### CSS
@@ -103,10 +106,10 @@ static get observedAttributes() {
 ## Glossary
 
 -   Shadow Tree
--   Shadow DOM: helps to create self contained elements with limited scope of styles, using Vanilla JS. Advantages (in conjunction with Web Components):
+-   [Shadow DOM](https://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/): helps to create self contained elements with limited scope of styles, using Vanilla JS. Advantages (in conjunction with Web Components):
     -   Isolated DOM
     -   Scoped CSS
     -   Composition
     -   Simplified CSS
     -   Let us think in terms of components, rather than pages
--   `<template/>`:The <template> HTML element is a mechanism for holding HTML that is not to be rendered immediately when a page is loaded but may be instantiated subsequently during runtime using JavaScript. Think of a template as a content fragment that is being stored for subsequent use in the document. While the parser does process the contents of the <template> element while loading the page, it does so only to ensure that those contents are valid; the element's contents are not rendered, however.
+-   [`<template/>`](https://www.html5rocks.com/en/tutorials/webcomponents/template/):The `<template>` HTML element is a mechanism for holding HTML that is not to be rendered immediately when a page is loaded but may be instantiated subsequently during runtime using JavaScript. Think of a template as a content fragment that is being stored for subsequent use in the document. While the parser does process the contents of the `<template>` element while loading the page, it does so only to ensure that those contents are valid; the element's contents are not rendered, however.
