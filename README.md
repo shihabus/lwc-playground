@@ -18,16 +18,31 @@
 
 -   called when an instance of the element is created or upgraded
 -   used for state initialization, setting up event listeners or creating shadow dom
+-   you can't access the child
+-   the host can be access as `this.template`, but attributes can't be added
+-   always call `super()` because it ensures proper `this` initialization
+-   don’t use a `return` statement inside the constructor body, unless it is a simple early-return (return or return this).
+-   don’t use the `document.write()` or `document.open()` methods.
+-   don’t inspect the element's attributes and children, because they don’t exist yet.
+-   don’t inspect the element’s public properties, because they’re set after the component is created.
+-   parent -> child
 
 ##### connectedCallback
 
 -   called each time the element is inserted into DOM
 -   useful for running set up code like fetching resources
+-   connectedCallback can be used to add attributes to the host and add eventListeners
+-   you can access the child
+-   to access host use `this`
+-   use `this.isConnected` to see if the component is connected to the DOM or not
+-   parent -> child
 
 ##### disconnectedCallback
 
 -   when element is removed from DOM
 -   place for clean ups
+-   event listeners are browser garbage collected, but good if you can remove them thus we can ensure no memory leaks
+-   parent -> child
 
 ##### attributeChangedCallback(attrName, oldVal, newVal)
 
@@ -109,7 +124,57 @@ static get observedAttributes() {
 #### Light DOM
 
 -   Shadow DOM makes third party integration and global styling difficult because it makes the component inaccessible to programmatic code outside it. But light DOM enables our component markup to live outside the shadow DOM.
--
+
+#### Lifecycle
+
+##### render
+
+-   this method returns a valid HTML template
+-   LWC special method
+-   can be invoked before or after `connectedCallback()`
+-   used for complex tasks like conditionally rendering templates
+
+##### renderedCallback
+
+-   LWC reuses elements when ever possible
+    -   in `for:each` the `key` decides whether the elements can be re-used or not
+    -   for `slot` the engine attempts to reuse but the diffing algorithm decides whether to evict them or not
+-   this life cycle method may be called many times after render
+-   during re-render all the expressions used in the template are re-evaluated
+-   if you want to programmatically add event listeners this is the best place
+-   if event listeners are of same type and config, duplicate ones will be automatically removed by the browser
+-   we can use `hasRendered` flags to avoid duplicate computation when the life cycle gets re-triggered multiple times
+
+##### errorCallback(error, stack)
+
+-   it can only can errors inside lifecycle methods of child and not in itself
+-   can be used to create error boundaries
+-   `error` is JS error object and `stack` is a string
+-   it is more like a try/catch or lifecycle guard for components
+-   when there is an error you can use it to notify the used and render an alternate view
+-   if there is an error in a component, it gets auto removed from the DOM
+
+```
+    <!-- boundary.html -->
+    <template>
+        <template if:true={error}>
+            <error-view error={error} info={stack}></error-view>
+        </template>
+        <template if:false={error}>
+            <healthy-view></healthy-view>
+        </template>
+    </template>
+
+    // boundary.js
+    import { LightningElement } from 'lwc';
+    export default class Boundary extends LightningElement {
+        error;
+        stack;
+        errorCallback(error, stack) {
+            this.error = error;
+        }
+    }
+```
 
 ## Glossary
 
