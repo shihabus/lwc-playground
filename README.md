@@ -176,6 +176,14 @@ static get observedAttributes() {
     }
 ```
 
+#### Share Code
+
+#### Wire Adapters
+
+- `@wire` is used to provide a stream of data to a compomnent
+
+
+
 ## Glossary
 
 -   Shadow Tree
